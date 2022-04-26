@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: spring-boot-template
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+  # 默认public、static、templates目录不需要做映射，如果添加其他目录，那么这几个目录映射需要加上
+#  resources:
+#    static-locations:
+
+mybatis-plus:
+  type-aliases-package: com.kai.entity
+  mapper-locations: classpath:/xml/*Mapper.xml
+  global-config:
+    db-config:
+      logic-delete-field: deleted  #全局逻辑删除字段值，3.3.0开始支持
+      logic-delete-value: Y # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: N # 逻辑未删除值(默认为 0)
+
+logging:
+  level:
+    com:
+      kai:
+        DEBUG
+
+auth:
+  add-path-patterns:
+    - "/adminApi/**"
+    - "/userApi/**"
+  exclude-path-patterns:
+    - "/adminApi/login/**"
+    - "/adminApi/permission/**"
+    - "/userApi/login/**"

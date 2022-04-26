@@ -1,0 +1,28 @@
+{
+  "properties": [
+    {
+      "name": "logback.filePath",
+      "type": "java.lang.String",
+      "description": "Description for logback.filePath."
+    },
+    {
+      "name": "upload.path",
+      "type": "java.lang.String",
+      "description": "Description for upload.path."
+    },
+    {
+      "name": "upload.url",
+      "type": "java.lang.String",
+      "description": "Description for upload.url."
+    },
+    {
+      "name": "auth.add-path-patterns",
+      "type": "java.lang.String",
+      "description": "Description for auth.add-path-patterns."
+    },
+    {
+      "name": "auth.exclude-path-patterns",
+      "type": "java.lang.String",
+      "description": "Description for auth.exclude-path-patterns."
+    }
+  ] }
