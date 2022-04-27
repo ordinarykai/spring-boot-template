@@ -62,20 +62,21 @@ public class Role extends Model<Role> {
     @NotNull(message = "乐观锁不能为空")
     private Integer version;
 
-    @ApiModelProperty(value = "逻辑删除（Y.已删除 N.未删除）")
-    @NotEmpty(message = "逻辑删除（Y.已删除 N.未删除）不能为空")
-    @Size(max = 1, message = "逻辑删除（Y.已删除 N.未删除）长度过长")
-    private String deleted;
+    @ApiModelProperty(value = "逻辑删除（1.已删除 0.未删除）")
+    @NotEmpty(message = "逻辑删除（1.已删除 0.未删除）不能为空")
+    @Size(max = 1, message = "逻辑删除（1.已删除 0.未删除）长度过长")
+    private Integer deleted;
 
     @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull(message = "创建时间不能为空")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "修改时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull(message = "修改时间不能为空")
-    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
 
