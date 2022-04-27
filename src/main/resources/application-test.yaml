@@ -9,7 +9,6 @@ spring:
   redis:
     host: 192.168.1.213
     port: 6379
-    password: redis+abc
     database: 0
 
 logback:
@@ -17,4 +16,4 @@ logback:
 
 upload:
   path: /application/spring-boot-template/upload/  # 上传文件存储目录
-  url: http://localhost:8080/ # 文件读取地址
+  url: http://localhost:8080/upload/ # 文件读取地址
