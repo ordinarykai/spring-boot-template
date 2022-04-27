@@ -65,6 +65,7 @@ public class PermissionController {
                 .ne(ENABLE.equals(associateStatus), Permission::getParentId, -1)
                 .eq(Objects.nonNull(level), Permission::getLevel, level)
                 .orderByAsc(Permission::getLevel)
+                .orderByAsc(Permission::getParentId)
                 .orderByAsc(Permission::getNum);
         Page<Permission> permissionPage = permissionService.page(new Page<>(page, size), queryWrapper);
         return Result.success(permissionPage);
@@ -77,6 +78,7 @@ public class PermissionController {
     ) {
         LambdaQueryWrapper<Permission> queryWrapper = Wrappers.lambdaQuery(Permission.class)
                 .eq(Permission::getLevel, level)
+                .orderByAsc(Permission::getParentId)
                 .orderByAsc(Permission::getNum);
         List<Permission> permissionList = permissionService.list(queryWrapper);
         List<SelectVO> selectList = permissionList.stream().map(permission -> {
