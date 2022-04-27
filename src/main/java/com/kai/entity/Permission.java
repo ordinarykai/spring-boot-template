@@ -37,7 +37,7 @@ public class Permission extends Model<Permission> {
     @TableId(value = "permission_id", type = IdType.AUTO)
     private Integer permissionId;
 
-    @ApiModelProperty(value = "父级权限id")
+    @ApiModelProperty(value = "父级权限id (parentId=0表示顶级权限 parentId=-1表示自动生成还没有关联的权限)")
     @NotNull(message = "父级权限id不能为空")
     private Integer parentId;
 
