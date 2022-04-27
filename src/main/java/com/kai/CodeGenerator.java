@@ -101,7 +101,7 @@ public class CodeGenerator {
     @Data
     public static class InjectionConfigParam {
         // controller请求前缀
-        private final String api = "adminApi";
+        private final String api = "/api";
     }
 
     /**
