@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.kai.util.constant.CommonConstant.DISABLE;
+import static com.kai.util.constant.CommonConstant.ENABLE;
 import static com.kai.util.constant.RedisConstant.REDIS_PERMISSION_ROLE;
 
 /**
@@ -45,9 +47,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     private RedisService redisService;
 
     @Override
-    public List<SelectVO> querySelect() {
+    public List<SelectVO> select() {
         List<Role> roleList = this.list(Wrappers.lambdaQuery(Role.class)
-                .eq(Role::getStatus, "Y"));
+                .eq(Role::getStatus, ENABLE));
         return roleList.stream().map(role -> {
             SelectVO res = new SelectVO();
             res.setLabel(role.getRoleName());
@@ -111,7 +113,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public IPage<RoleVO> pageQuery(RolePageDTO req) {
+    public IPage<RoleVO> page(RolePageDTO req) {
         String roleName = req.getRoleName();
         String status = req.getStatus();
         LambdaQueryWrapper<Role> queryWrapper = Wrappers.lambdaQuery(Role.class);
@@ -140,20 +142,20 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     public Result<Void> updateStatus(Integer roleId) {
         Role role = this.getById(roleId);
         Assert.notNull(role, "系统异常，要操作的角色信息不存在");
-        String oldStatus = role.getStatus();
-        if ("Y".equals(oldStatus)) {
-            role.setStatus("N");
+        Integer oldStatus = role.getStatus();
+        if (ENABLE.equals(oldStatus)) {
+            role.setStatus(DISABLE);
         } else {
-            role.setStatus("Y");
+            role.setStatus(ENABLE);
         }
         boolean b = role.updateById();
-        if (b && "N".equals(oldStatus)) {
+        if (b && DISABLE.equals(oldStatus)) {
             return Result.success(null, "启用成功");
         }
-        if (!b && "N".equals(oldStatus)) {
+        if (!b && DISABLE.equals(oldStatus)) {
             return Result.failed("启用失败");
         }
-        if (b && "Y".equals(oldStatus)) {
+        if (b && ENABLE.equals(oldStatus)) {
             return Result.success(null, "禁用成功");
         }
         return Result.failed("禁用失败");

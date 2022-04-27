@@ -31,5 +31,4 @@ public interface RedisConstant {
      */
     String REDIS_PERMISSION_TREE = "kai:permission:tree";
 
-
 }

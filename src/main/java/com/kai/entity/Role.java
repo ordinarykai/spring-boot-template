@@ -44,10 +44,10 @@ public class Role extends Model<Role> {
     @Size(max = 50, message = "角色描述长度过长")
     private String description;
 
-    @ApiModelProperty(value = "角色状态（Y.正常 N.禁用）")
-    @NotEmpty(message = "角色状态（Y.正常 N.禁用）不能为空")
-    @Size(max = 1, message = "角色状态（Y.正常 N.禁用）长度过长")
-    private String status;
+    @ApiModelProperty(value = "角色状态（1.正常 0.禁用）")
+    @NotEmpty(message = "角色状态（1.正常 0.禁用）不能为空")
+    @Size(max = 1, message = "角色状态（1.正常 0.禁用）长度过长")
+    private Integer status;
 
     @ApiModelProperty(value = "创建人 外联t_admin(admin_id)")
     @NotEmpty(message = "创建人 外联t_admin(admin_id)不能为空")

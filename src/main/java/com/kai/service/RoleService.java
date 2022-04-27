@@ -21,7 +21,7 @@ public interface RoleService extends IService<Role> {
     /**
      * 查询角色下拉框
      */
-    List<SelectVO> querySelect();
+    List<SelectVO> select();
 
     /**
      * 添加角色
@@ -41,7 +41,7 @@ public interface RoleService extends IService<Role> {
     /**
      * 查询角色分页列表
      */
-    IPage<RoleVO> pageQuery(RolePageDTO req);
+    IPage<RoleVO> page(RolePageDTO req);
 
     /**
      * 查询角色详情

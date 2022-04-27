@@ -44,8 +44,18 @@ public interface CommonConstant {
     String PRO_ENV = "pro";
 
     /**
-     * 正式环境下，返回给前端的异常提示信息
+     * 默认异常提示信息
      */
-     String DEFAULT_EXCEPTION_MSG = "系统异常，请稍后重试";
+    String DEFAULT_EXCEPTION_MSG = "系统异常，请稍后重试";
+
+    /**
+     * 开启/启用标志位
+     */
+    Integer ENABLE = 1;
+
+    /**
+     * 关闭/禁用标志位
+     */
+    Integer DISABLE = 0;
 
 }
