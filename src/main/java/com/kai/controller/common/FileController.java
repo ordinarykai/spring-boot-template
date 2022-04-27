@@ -33,7 +33,7 @@ public class FileController {
     @Autowired
     UploadConfig uploadConfig;
 
-    @PostMapping(value = "upload")
+    @PostMapping
     @ApiOperation(value = "上传文件", notes = "上传文件")
     public Result<FileVO> upload(@RequestPart(value = "file") MultipartFile file) {
         //上传文件存储根目录
@@ -56,7 +56,7 @@ public class FileController {
         return Result.success(fileDTO);
     }
 
-    @GetMapping("/getBaseUploadUrl")
+    @GetMapping("/baseUploadUrl")
     @ApiOperation(value = "获取文件地址前缀", notes = "获取文件地址前缀")
     public Result<BaseUploadUrlVO> getBaseUploadUrl() {
         BaseUploadUrlVO baseUploadUrlDTO = new BaseUploadUrlVO();

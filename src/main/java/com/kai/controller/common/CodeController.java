@@ -37,7 +37,7 @@ public class CodeController {
     @Autowired
     private RedisService redisService;
 
-    @GetMapping(value = "/getVerifyCode")
+    @GetMapping(value = "/captcha")
     @ApiOperation(value = "获取图形验证码", notes = "获取图形验证码")
     public void getCode(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         //自定义验证码（随机4位字母+数字，排除了O/o/0）
@@ -62,7 +62,7 @@ public class CodeController {
         }
     }
 
-    @PostMapping(value = "sendSms")
+    @PostMapping(value = "/sms")
     @ApiOperation(value = "发送手机验证码", notes = "发送手机验证码")
     public Result<Void> sendSms(@RequestBody @Valid SendSmsDTO req) {
         String phone = req.getPhone();
