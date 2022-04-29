@@ -1,32 +1,6 @@
 <template>
   <div class="app-container">
 
-    <el-form :model="queryParams" size="small" :inline="true" label-width="68px">
-      <el-form-item label="权限名称">
-        <el-input
-          v-model="queryParams.name"
-          placeholder="请输入权限名称"
-          clearable
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="是否关联">
-        <el-select v-model="queryParams.associateStatus" placeholder="请选择是否关联">
-          <el-option
-          v-for="item in associatedList"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="handeTree">重置</el-button>
-      </el-form-item>
-    </el-form>
-
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
@@ -45,6 +19,13 @@
           size="mini"
           @click="handleDelete"
         >删除</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          icon="el-icon-refresh"
+          size="mini"
+          @click="handleQuery"
+       >刷新</el-button>
       </el-col>
     </el-row>
 
@@ -78,15 +59,6 @@
         </template>
       </el-table-column>
     </el-table>
-    <div style="margin-top: 20px">
-      <el-pagination
-        @current-change="handleQuery"
-        :current-page.sync="queryParams.page"
-        :page-size="queryParams.size"
-        layout="prev, pager, next, jumper"
-        :total="total">
-      </el-pagination>
-    </div>
 
     <!-- 添加或修改权限对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
@@ -107,7 +79,7 @@
         <el-form-item label="上级权限">
           <treeselect
           v-model="form.parentId"
-          :options="permissionParentList"
+          :options="permissionTreeSelect"
           :show-count="true"
           placeholder="选择上级菜单"
           />
@@ -157,7 +129,7 @@
 </template>
 
 <script>
-import { page, addOrUpdate, remove, query, listByLevel, tree } from '../api/permission'
+import { page, addOrUpdate, remove, query, treeSelect } from '../api/permission'
 import { Message } from 'element-ui'
 import Treeselect from '@riophae/vue-treeselect'
 import iconJson from '../assets/icon.json'
@@ -168,13 +140,11 @@ export default {
   components: { Treeselect },
   data () {
     return {
+      // 权限列表数据
       permissionList: [],
-      queryParams: {
-        page: 1,
-        size: 10,
-        name: ''
-      },
+      // 列表选择的权限集合
       ids: [],
+      // 权限类型
       typeList: [{
         label: '菜单',
         value: 1
@@ -182,17 +152,8 @@ export default {
         label: '按钮',
         value: 2
       }],
-      levelList: [{
-        label: '一级',
-        value: 1
-      }, {
-        label: '二级',
-        value: 2
-      }, {
-        label: '三级',
-        value: 3
-      }],
-      permissionParentList: [],
+      // 权限下拉树
+      permissionTreeSelect: [],
       title: '',
       // 是否显示弹出层
       open: false,
@@ -203,24 +164,13 @@ export default {
         parentId: null,
         uri: '',
         icon: '',
-        num: undefined
+        num: null
       },
       permissionId: undefined,
       permissionTree: undefined,
       treeTitle: '查看权限树',
       treeOpen: false,
       expandedKeys: [],
-      total: undefined,
-      associatedList: [{
-        label: '全部',
-        value: undefined
-      }, {
-        label: '是',
-        value: 1
-      }, {
-        label: '否',
-        value: 2
-      }],
       iconList: [],
       iconTitle: '选择图标',
       iconOpen: false,
@@ -235,37 +185,12 @@ export default {
   methods: {
     handleQuery () {
       page(this.queryParams).then(response => {
-        this.permissionList = response.data.records
+        this.permissionList = response.data
         console.log(this.permissionList)
         this.total = response.data.total
       })
     },
-    queryTree2 () {
-      let permissionList = this.permissionList = this.permissionList.filter(permission => {
-        return permission.name.indexOf(this.queryParams.name) != -1
-      })
-      this.permissionTableTree = permissionList.filter(permission => {
-        return permission.parentId == 0
-      })
-      this.permissionTableTree.forEach((permission, index) => {
-        permission.children = this.handeTree(permission.permissionId)
-      })
-      console.log(this.permissionTableTree)
-    },
-    handeTree (parentId) {
-      let list = this.permissionList.filter(permission => {
-        return permission.parentId == parentId
-      })
-      list.forEach((permission, index) => {
-        permission.children = this.handeTree(permission.permissionId)
-      })
-      return list
-    },
     resetQuery () {
-      this.queryParams = {
-        page: 1,
-        size: 10
-      }
       this.handleQuery()
     },
     handleAdd (row) {
@@ -279,7 +204,7 @@ export default {
       }
       this.title = '新增权限'
       this.open = true
-      this.getListByLevel()
+      this.getTreeSelect()
     },
     handleUpdate (row) {
       this.reset()
@@ -290,7 +215,7 @@ export default {
         this.open = true
         this.title = '修改权限'
         this.form.parentId = this.form.parentId + ''
-        this.getListByLevel()
+        this.getTreeSelect()
       })
     },
     handleDelete () {
@@ -336,22 +261,10 @@ export default {
         icon: ''
       }
     },
-    // 查询父级权限菜单
-    getListByLevel () {
-      listByLevel(1).then(response => {
-        console.log(response.data)
-        this.permissionParentList = response.data
-      })
-    },
-    queryTree () {
-      this.treeOpen = true
-      tree().then(response => {
-        this.permissionTree = response.data
-        this.permissionTree.forEach(permission => {
-          if (permission.children.length != 0) {
-            this.expandedKeys.push(permission.value)
-          }
-        })
+    // 查询权限下拉树
+    getTreeSelect () {
+      treeSelect().then(response => {
+        this.permissionTreeSelect = response.data
       })
     },
     showIcon () {

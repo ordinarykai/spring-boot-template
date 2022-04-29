@@ -4,7 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import com.kai.config.UploadConfig;
 import com.kai.config.api.Result;
 import com.kai.config.api.exception.ApiException;
-import com.kai.util.MyStringUtil;
+import com.kai.util.StringUtil;
 import com.kai.bo.vo.BaseUploadUrlVO;
 import com.kai.bo.vo.FileVO;
 import io.swagger.annotations.Api;
@@ -41,7 +41,7 @@ public class FileController {
         //上传文件上级目录
         String parentDirectory = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM")) + File.separator;
         //随机文件名
-        String fileName = MyStringUtil.getUuid() + MyStringUtil.getFileSuffix(file.getOriginalFilename());
+        String fileName = StringUtil.getUuid() + StringUtil.getFileSuffix(file.getOriginalFilename());
         //创建文件并复制上传文件内容
         File targetFile = FileUtil.touch(path + parentDirectory + fileName);
         try (InputStream inputStream = file.getInputStream()) {

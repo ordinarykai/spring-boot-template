@@ -34,10 +34,10 @@ export const remove = (permissionIds) => {
   })
 }
 
-// 根据权限等级查询权限列表
-export const listByLevel = (level) => {
+// 查询权限下拉树
+export const treeSelect = () => {
   return request({
-    url: '/permission/level/' + level,
+    url: '/permission/tree/select',
     method: 'get'
   })
 }

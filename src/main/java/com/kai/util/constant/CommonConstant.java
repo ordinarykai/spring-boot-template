@@ -54,6 +54,11 @@ public interface CommonConstant {
     Integer ENABLE = 1;
 
     /**
+     * 顶级权限 父类ID 标志
+     */
+    Integer TOP_PARENT_ID = 0;
+
+    /**
      * 关闭/禁用/否 标志位
      */
     Integer DISABLE = 0;

@@ -45,10 +45,6 @@ public class Permission extends Model<Permission> {
     @NotNull(message = "类型不能为空")
     private Integer type;
 
-    @ApiModelProperty(value = "权限等级")
-//    @NotNull(message = "权限等级不能为空")
-    private Integer level;
-
     @ApiModelProperty(value = "权限名称")
     @NotBlank(message = "权限名称不能为空")
     private String name;

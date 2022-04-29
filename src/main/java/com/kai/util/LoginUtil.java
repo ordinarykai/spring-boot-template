@@ -24,7 +24,7 @@ public abstract class LoginUtil {
      * 存储用户信息
      */
     public static String set(LoginInfo loginInfo) {
-        String token = MyStringUtil.getUuid();
+        String token = StringUtil.getUuid();
         redisService.set(RedisConstant.REDIS_LOGIN + token, loginInfo, EXPIRE_TIME);
         return token;
     }

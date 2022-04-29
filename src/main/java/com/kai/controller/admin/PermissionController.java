@@ -1,9 +1,7 @@
 package com.kai.controller.admin;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kai.bo.vo.PermissionVO;
 import com.kai.config.api.Result;
 import com.kai.config.redis.service.RedisService;
@@ -13,19 +11,16 @@ import com.kai.util.bo.TreeSelectVO;
 import com.kai.util.bo.TreeVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.kai.util.constant.CommonConstant.DISABLE;
-import static com.kai.util.constant.CommonConstant.ENABLE;
+import static com.kai.util.constant.CommonConstant.TOP_PARENT_ID;
 import static com.kai.util.constant.RedisConstant.REDIS_PERMISSION_TREE;
 
 /**
@@ -43,46 +38,24 @@ public class PermissionController {
     private RedisService redisService;
 
     @GetMapping
-    @ApiOperation(value = "查询权限分页列表", notes = "查询权限分页列表")
-    public Result<IPage<PermissionVO>> page(
-            Integer page, Integer size,
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "parentName", required = false) String parentName,
-            @RequestParam(value = "level", required = false) Integer level,
-            @ApiParam("是否关联 (1.是 0.否)") @RequestParam(value = "associateStatus", required = false) Integer associateStatus
-    ) {
-        List<Integer> parentIds = new ArrayList<>();
-        if (StringUtils.isNotBlank(parentName)) {
-            LambdaQueryWrapper<Permission> parentQueryWrapper = Wrappers.lambdaQuery(Permission.class)
-                    .like(StringUtils.isNotBlank(parentName), Permission::getName, parentName);
-            parentIds = permissionService.list(parentQueryWrapper).stream().map(Permission::getPermissionId).collect(Collectors.toList());
-        }
-        if (DISABLE.equals(associateStatus)) {
-            parentIds.add(-1);
-        }
+    @ApiOperation(value = "查询权限列表", notes = "查询权限列表")
+    public Result<List<PermissionVO>> list() {
         LambdaQueryWrapper<Permission> queryWrapper = Wrappers.lambdaQuery(Permission.class)
-                .like(StringUtils.isNotBlank(name), Permission::getName, name)
-                .in(CollectionUtils.isNotEmpty(parentIds), Permission::getParentId, parentIds)
-                .ne(ENABLE.equals(associateStatus), Permission::getParentId, -1)
-                .eq(Objects.nonNull(level), Permission::getLevel, level)
-                .orderByAsc(Permission::getLevel)
                 .orderByAsc(Permission::getParentId)
                 .orderByAsc(Permission::getNum);
-        IPage<PermissionVO> permissionPage = permissionService.page(new Page<>(page, size), queryWrapper).convert(permission -> {
-            PermissionVO permissionVO = new PermissionVO();
-            BeanUtils.copyProperties(permission, permissionVO);
-            permissionVO.setChildren(getChildren(permission.getPermissionId()));
-            return permissionVO;
-        });
-        return Result.success(permissionPage);
+        List<Permission> permissionList = permissionService.list(queryWrapper);
+        List<PermissionVO> permissionVOList = getPermissionVOList(permissionList, TOP_PARENT_ID);
+        return Result.success(permissionVOList);
     }
 
-    public List<PermissionVO> getChildren(Integer parentId) {
-        return permissionService.list(Wrappers.lambdaQuery(Permission.class).eq(Permission::getParentId, parentId))
-                .stream().map(permission -> {
+    public List<PermissionVO> getPermissionVOList(List<Permission> permissionList, Integer parentId) {
+        return permissionList.stream()
+                .filter(permission -> permission.getParentId().equals(parentId))
+                .map(permission -> {
                     PermissionVO permissionVO = new PermissionVO();
                     BeanUtils.copyProperties(permission, permissionVO);
-                    permissionVO.setChildren(getChildren(permission.getPermissionId()));
+                    List<PermissionVO> permissionVOList = getPermissionVOList(permissionList, permission.getPermissionId());
+                    permissionVO.setChildren(permissionVOList);
                     return permissionVO;
                 }).collect(Collectors.toList());
     }
@@ -94,9 +67,9 @@ public class PermissionController {
                 .orderByAsc(Permission::getParentId)
                 .orderByAsc(Permission::getNum);
         List<Permission> permissionList = permissionService.list(queryWrapper);
-        List<TreeSelectVO> selectList = getTreeSelect(permissionList, 0);
+        List<TreeSelectVO> selectList = getTreeSelect(permissionList, TOP_PARENT_ID);
         TreeSelectVO treeSelectVO = new TreeSelectVO();
-        treeSelectVO.setId(0);
+        treeSelectVO.setId(TOP_PARENT_ID);
         treeSelectVO.setLabel("顶级菜单");
         treeSelectVO.setChildren(selectList);
         return Result.success(Collections.singletonList(treeSelectVO));
@@ -110,9 +83,7 @@ public class PermissionController {
                     treeSelectVO.setId(permission.getPermissionId());
                     treeSelectVO.setLabel(permission.getName());
                     List<TreeSelectVO> treeSelect = getTreeSelect(permissionList, permission.getPermissionId());
-                    if(!treeSelect.isEmpty()){
-                        treeSelectVO.setChildren(treeSelect);
-                    }
+                    treeSelectVO.setChildren(treeSelect);
                     return treeSelectVO;
                 }).collect(Collectors.toList());
     }

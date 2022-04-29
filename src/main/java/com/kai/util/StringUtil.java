@@ -1,5 +1,6 @@
 package com.kai.util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
@@ -10,7 +11,7 @@ import java.util.UUID;
  * @author kai
  * @date 2022/3/12 13:39
  */
-public abstract class MyStringUtil {
+public abstract class StringUtil extends StringUtils {
 
     /**
      * 生成uuid
