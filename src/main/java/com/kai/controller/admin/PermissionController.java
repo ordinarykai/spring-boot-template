@@ -96,7 +96,7 @@ public class PermissionController {
         List<Permission> permissionList = permissionService.list(queryWrapper);
         List<TreeSelectVO> selectList = getTreeSelect(permissionList, 0);
         TreeSelectVO treeSelectVO = new TreeSelectVO();
-        treeSelectVO.setId("0");
+        treeSelectVO.setId(0);
         treeSelectVO.setLabel("顶级菜单");
         treeSelectVO.setChildren(selectList);
         return Result.success(Collections.singletonList(treeSelectVO));
@@ -107,7 +107,7 @@ public class PermissionController {
                 .filter(permission -> permission.getParentId().equals(parentId))
                 .map(permission -> {
                     TreeSelectVO treeSelectVO = new TreeSelectVO();
-                    treeSelectVO.setId(permission.getPermissionId().toString());
+                    treeSelectVO.setId(permission.getPermissionId());
                     treeSelectVO.setLabel(permission.getName());
                     List<TreeSelectVO> treeSelect = getTreeSelect(permissionList, permission.getPermissionId());
                     if(!treeSelect.isEmpty()){

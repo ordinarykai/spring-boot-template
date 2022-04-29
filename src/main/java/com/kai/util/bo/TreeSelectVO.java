@@ -13,7 +13,7 @@ import java.util.List;
 public class TreeSelectVO {
 
     @ApiModelProperty("id")
-    private String id;
+    private Integer id;
 
     @ApiModelProperty("label")
     private String label;
