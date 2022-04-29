@@ -1,26 +1,27 @@
 package com.kai.controller.admin;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.kai.bo.vo.PermissionVO;
 import com.kai.config.api.Result;
 import com.kai.config.redis.service.RedisService;
 import com.kai.entity.Permission;
 import com.kai.service.PermissionService;
-import com.kai.util.bo.SelectVO;
+import com.kai.util.bo.TreeSelectVO;
 import com.kai.util.bo.TreeVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.kai.util.constant.CommonConstant.DISABLE;
@@ -43,7 +44,7 @@ public class PermissionController {
 
     @GetMapping
     @ApiOperation(value = "查询权限分页列表", notes = "查询权限分页列表")
-    public Result<Page<Permission>> page(
+    public Result<IPage<PermissionVO>> page(
             Integer page, Integer size,
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "parentName", required = false) String parentName,
@@ -67,27 +68,53 @@ public class PermissionController {
                 .orderByAsc(Permission::getLevel)
                 .orderByAsc(Permission::getParentId)
                 .orderByAsc(Permission::getNum);
-        Page<Permission> permissionPage = permissionService.page(new Page<>(page, size), queryWrapper);
+        IPage<PermissionVO> permissionPage = permissionService.page(new Page<>(page, size), queryWrapper).convert(permission -> {
+            PermissionVO permissionVO = new PermissionVO();
+            BeanUtils.copyProperties(permission, permissionVO);
+            permissionVO.setChildren(getChildren(permission.getPermissionId()));
+            return permissionVO;
+        });
         return Result.success(permissionPage);
     }
 
-    @GetMapping("/select")
-    @ApiOperation(value = "查询权限列表", notes = "查询权限列表")
-    public Result<List<SelectVO>> select(
-            @RequestParam(value = "level") Integer level
-    ) {
+    public List<PermissionVO> getChildren(Integer parentId) {
+        return permissionService.list(Wrappers.lambdaQuery(Permission.class).eq(Permission::getParentId, parentId))
+                .stream().map(permission -> {
+                    PermissionVO permissionVO = new PermissionVO();
+                    BeanUtils.copyProperties(permission, permissionVO);
+                    permissionVO.setChildren(getChildren(permission.getPermissionId()));
+                    return permissionVO;
+                }).collect(Collectors.toList());
+    }
+
+    @GetMapping("/tree/select")
+    @ApiOperation(value = "查询权限下拉树", notes = "查询权限下拉树")
+    public Result<List<TreeSelectVO>> treeSelect() {
         LambdaQueryWrapper<Permission> queryWrapper = Wrappers.lambdaQuery(Permission.class)
-                .eq(Permission::getLevel, level)
                 .orderByAsc(Permission::getParentId)
                 .orderByAsc(Permission::getNum);
         List<Permission> permissionList = permissionService.list(queryWrapper);
-        List<SelectVO> selectList = permissionList.stream().map(permission -> {
-            SelectVO selectVO = new SelectVO();
-            selectVO.setValue(String.valueOf(permission.getPermissionId()));
-            selectVO.setLabel(permission.getName());
-            return selectVO;
-        }).collect(Collectors.toList());
-        return Result.success(selectList);
+        List<TreeSelectVO> selectList = getTreeSelect(permissionList, 0);
+        TreeSelectVO treeSelectVO = new TreeSelectVO();
+        treeSelectVO.setId("0");
+        treeSelectVO.setLabel("顶级菜单");
+        treeSelectVO.setChildren(selectList);
+        return Result.success(Collections.singletonList(treeSelectVO));
+    }
+
+    public List<TreeSelectVO> getTreeSelect(List<Permission> permissionList, Integer parentId) {
+        return permissionList.stream()
+                .filter(permission -> permission.getParentId().equals(parentId))
+                .map(permission -> {
+                    TreeSelectVO treeSelectVO = new TreeSelectVO();
+                    treeSelectVO.setId(permission.getPermissionId().toString());
+                    treeSelectVO.setLabel(permission.getName());
+                    List<TreeSelectVO> treeSelect = getTreeSelect(permissionList, permission.getPermissionId());
+                    if(!treeSelect.isEmpty()){
+                        treeSelectVO.setChildren(treeSelect);
+                    }
+                    return treeSelectVO;
+                }).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/tree")

@@ -55,12 +55,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // 内部权限编辑页面放在static目录，生产环境严禁开启访问
+        // 内部权限编辑页面放在resources下的permission目录，生产环境严禁开启访问
         if (!env.equals(PRO_ENV)) {
-            registry.addResourceHandler("/**")
-                    .addResourceLocations("classpath:/static/");
+            registry.addResourceHandler("/permission/**")
+                    .addResourceLocations("classpath:/permission/");
         }
-        registry.addResourceHandler("/upload")
+        registry.addResourceHandler("/upload/**")
                 .addResourceLocations("file:" + uploadConfig.getPath());
         WebMvcConfigurer.super.addResourceHandlers(registry);
     }
