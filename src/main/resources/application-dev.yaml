@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8082
 
 spring:
   datasource:
@@ -12,8 +12,8 @@ spring:
     database: 0
 
 logback:
-  filePath: /application/spring-boot-template/logs/  # 日志文件存储目录
+  filePath: /Project/Peronal/spring-boot-template/logs/  # 日志文件存储目录
 
 upload:
-  path: /application/spring-boot-template/upload/  # 上传文件存储目录
+  path: /Project/Peronal/spring-boot-template/upload/  # 上传文件存储目录
   url: http://localhost:8080/upload/ # 文件读取地址
