@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 import static com.kai.util.constant.CommonConstant.PRO_ENV;
 import static com.kai.util.constant.CommonConstant.TOKEN;
+import static org.springframework.http.HttpMethod.*;
 
 /**
  * Swagger配置类
@@ -40,7 +41,7 @@ public class SwaggerConfig {
      */
     @Bean
     public Docket createApi() {
-        return new Docket(DocumentationType.OAS_30)
+        return only200ResponseDocket()
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.kai.controller"))
@@ -51,6 +52,17 @@ public class SwaggerConfig {
                 .groupName("总接口")
                 .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts());
+    }
+
+    /**
+     * 只显示200响应
+     */
+    private Docket only200ResponseDocket() {
+        return new Docket(DocumentationType.OAS_30)
+                .globalResponses(GET, new ArrayList<>())
+                .globalResponses(POST, new ArrayList<>())
+                .globalResponses(PUT, new ArrayList<>())
+                .globalResponses(DELETE, new ArrayList<>());
     }
 
     /**
