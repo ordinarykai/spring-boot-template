@@ -4,6 +4,7 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.kai.config.api.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @author kai
  */
 @Slf4j
+@Order(-1)
 @RestControllerAdvice
 @ConditionalOnProperty(value = "spring.cloud.sentinel.enabled", havingValue = "true")
 public class SentinelExceptionHandler {

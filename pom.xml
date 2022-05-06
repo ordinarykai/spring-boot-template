@@ -107,6 +107,12 @@
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
             <version>${sentinel-cloud-starter.version}</version>
         </dependency>
+        <!--sentinel使用nacos作为数据源-->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+            <version>1.8.4</version>
+        </dependency>
         <!--springboot接口请求参数自动加解密-->
         <dependency>
             <groupId>cn.shuibo</groupId>
