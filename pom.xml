@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.8</version>
+        <version>2.4.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -21,6 +21,7 @@
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
         <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
         <knife4j-boot-starter.version>2.0.7</knife4j-boot-starter.version>
+        <sentinel-cloud-starter.version>2020.0.RC1</sentinel-cloud-starter.version>
         <rsa-encrypt-body.version>1.0.1.RELEASE</rsa-encrypt-body.version>
         <apache-httpclient.version>4.5.13</apache-httpclient.version>
         <apache-commons-lang3.version>3.12.0</apache-commons-lang3.version>
@@ -100,6 +101,12 @@
 <!--            <artifactId>knife4j-spring-boot-starter</artifactId>-->
 <!--            <version>${knife4j-boot-starter.version}</version>-->
 <!--        </dependency>-->
+        <!--sentinel alibaba cloud starter依赖-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+            <version>${sentinel-cloud-starter.version}</version>
+        </dependency>
         <!--springboot接口请求参数自动加解密-->
         <dependency>
             <groupId>cn.shuibo</groupId>
