@@ -20,6 +20,7 @@
         <java.version>1.8</java.version>
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
         <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
+        <knife4j-boot-starter.version>2.0.7</knife4j-boot-starter.version>
         <rsa-encrypt-body.version>1.0.1.RELEASE</rsa-encrypt-body.version>
         <apache-httpclient.version>4.5.13</apache-httpclient.version>
         <apache-commons-lang3.version>3.12.0</apache-commons-lang3.version>
@@ -93,6 +94,12 @@
             <artifactId>springfox-boot-starter</artifactId>
             <version>${springfox-boot-starter.version}</version>
         </dependency>
+        <!--knife4j文档依赖-->
+<!--        <dependency>-->
+<!--            <groupId>com.github.xiaoymin</groupId>-->
+<!--            <artifactId>knife4j-spring-boot-starter</artifactId>-->
+<!--            <version>${knife4j-boot-starter.version}</version>-->
+<!--        </dependency>-->
         <!--springboot接口请求参数自动加解密-->
         <dependency>
             <groupId>cn.shuibo</groupId>

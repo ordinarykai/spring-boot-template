@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class PermissionGenerator {
 
     private static final String CONTROLLER_PACKAGE = "com.kai.controller";
-    private static final String SQL_FILE_NAME = "D:\\permission.sql";
+    private static final String SQL_FILE_NAME = "/application/spring-boot-template/sql/permission.sql";
     private static final String FORMAT_SQL = "INSERT INTO `t_permission`" +
             "(`parent_id`, `type`, `level`, `name`, `uri`, `icon`, `num`, `create_time`, `update_time`) " +
             "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')";

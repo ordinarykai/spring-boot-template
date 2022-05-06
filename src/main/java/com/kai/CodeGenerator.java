@@ -1,5 +1,6 @@
 package com.kai;
 
+import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
@@ -33,8 +34,8 @@ public class CodeGenerator {
     // https://baomidou.com/pages/061573/
 
     public static void main(String[] args) {
-        // 传入要生成的表名。不传代表全部表生成
-        executeAutoGenerator("t_permission");
+        // 传入要生成的表名, 不传代表全部表生成
+        executeAutoGenerator("spring_boot_template");
     }
 
     /**
@@ -44,17 +45,15 @@ public class CodeGenerator {
         // 数据库类型
         public static DbType dbType = DbType.MYSQL;
         // 数据库主机地址
-        public static String host = "1.116.114.206";
+        public static String host = "127.0.0.1";
         // 数据库端口
         public static String port = "3306";
-        // 指定数据库
-        public static String database = "test";
         // 数据库驱动
         public static String driverName = "com.mysql.cj.jdbc.Driver";
         // 数据库密码
-        public static String userName = "kai";
+        public static String userName = "root";
         // 数据库用户名
-        public static String password = "qwertyuiop";
+        public static String password = "123456";
     }
 
     /**
@@ -62,7 +61,7 @@ public class CodeGenerator {
      */
     public static class GlobalConfigParam {
         // 输出目录
-        public static String outPutDir = "D:/src/main";
+        public static String outPutDir = "/application/code-generator/main";
         // 作者
         public static String author = "kai";
         // 是否打开文件夹
@@ -143,9 +142,13 @@ public class CodeGenerator {
     }
 
     /**
-     * @param tables 要生成的表名。不传代表全部表生成
+     * @param database 数据库名
+     * @param tables   要生成的表名。不传代表全部表生成
      */
-    private static void executeAutoGenerator(String... tables) {
+    private static void executeAutoGenerator(String database,
+                                             String... tables) {
+
+        Assert.notBlank(database);
 
         // 代码生成器
         AutoGenerator autoGenerator = new AutoGenerator();
