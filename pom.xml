@@ -95,13 +95,6 @@
             <artifactId>springfox-boot-starter</artifactId>
             <version>${springfox-boot-starter.version}</version>
         </dependency>
-        <!--knife4j文档依赖-->
-<!--        <dependency>-->
-<!--            <groupId>com.github.xiaoymin</groupId>-->
-<!--            <artifactId>knife4j-spring-boot-starter</artifactId>-->
-<!--            <version>${knife4j-boot-starter.version}</version>-->
-<!--        </dependency>-->
-        <!--sentinel alibaba cloud starter依赖-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
