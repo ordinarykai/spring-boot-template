@@ -49,14 +49,14 @@ public interface CommonConstant {
     String DEFAULT_EXCEPTION_MSG = "系统异常，请稍后重试";
 
     /**
-     * 开启/启用/是 标志位
-     */
-    Integer ENABLE = 1;
-
-    /**
      * 顶级权限 父类ID 标志
      */
     Integer TOP_PARENT_ID = 0;
+
+    /**
+     * 开启/启用/是 标志位
+     */
+    Integer ENABLE = 1;
 
     /**
      * 关闭/禁用/否 标志位

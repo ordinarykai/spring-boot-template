@@ -35,7 +35,7 @@ public class CodeGenerator {
 
     public static void main(String[] args) {
         // 传入要生成的表名, 不传代表全部表生成
-        executeAutoGenerator("spring_boot_template");
+        executeAutoGenerator("spring_boot_template","t_admin");
     }
 
     /**

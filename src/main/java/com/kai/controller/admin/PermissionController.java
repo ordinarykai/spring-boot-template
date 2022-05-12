@@ -117,8 +117,8 @@ public class PermissionController {
     @PutMapping(value = "/cache")
     @ApiOperation(value = "更新权限缓存", notes = "更新权限缓存")
     public Result<Void> updatePermissionCache() {
-        permissionService.getAndUpdatePermissions();
-        permissionService.getAndUpdateTree();
+        permissionService.updatePermissionCache();
+        permissionService.updatePermissionTreeCache();
         return Result.success();
     }
 

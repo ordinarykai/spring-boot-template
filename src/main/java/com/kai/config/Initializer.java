@@ -23,8 +23,8 @@ public class Initializer {
      */
     @PostConstruct
     private void initConfig() {
-        permissionService.getAndUpdatePermissions();
-        permissionService.getAndUpdateTree();
+        permissionService.updatePermissionCache();
+        permissionService.updatePermissionTreeCache();
     }
 
 }

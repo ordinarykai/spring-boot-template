@@ -9,12 +9,14 @@ import com.kai.mapper.PermissionMapper;
 import com.kai.service.PermissionService;
 import com.kai.service.RoleService;
 import com.kai.util.bo.TreeVO;
-import com.kai.bo.vo.PermissionTreeVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.kai.util.constant.RedisConstant.*;
@@ -41,7 +43,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         if (redisService.hasKey(REDIS_PERMISSION_TREE)) {
             permissionTree = redisService.get(REDIS_PERMISSION_TREE);
         } else {
-            permissionTree = getAndUpdateTree();
+            permissionTree = updatePermissionTreeCache();
         }
         if (roleId == null) {
             return permissionTree;
@@ -60,7 +62,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     }
 
     @Override
-    public List<TreeVO> getAndUpdateTree() {
+    public List<TreeVO> updatePermissionTreeCache() {
         List<Permission> permissionList = this.list();
         List<Permission> parentPermissionList = permissionList
                 .stream()
@@ -73,7 +75,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     }
 
     @Override
-    public List<String> getAndUpdatePermissions() {
+    public List<String> updatePermissionCache() {
         List<String> permissions = this.list()
                 .stream().map(Permission::getUri)
                 .collect(Collectors.toList());
@@ -86,7 +88,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         if (redisService.hasKey(REDIS_PERMISSION)) {
             return redisService.get(REDIS_PERMISSION);
         }
-        return getAndUpdatePermissions();
+        return updatePermissionCache();
     }
 
     @Override
@@ -96,14 +98,14 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             if (redisService.hasKey(REDIS_PERMISSION_ROLE + roleId)) {
                 permissions.addAll(redisService.get(REDIS_PERMISSION_ROLE + roleId));
             } else {
-                permissions.addAll(getAndUpdatePermissionRole(roleId));
+                permissions.addAll(updateRolePermissionCache(roleId));
             }
         }
         return permissions;
     }
 
     @Override
-    public List<String> getAndUpdatePermissionRole(Integer roleId) {
+    public List<String> updateRolePermissionCache(Integer roleId) {
         Role role = roleService.getById(roleId);
         List<String> permissionIds = Arrays.asList(role.getPermissionIds().split(","));
         List<Permission> permissionList = this.list(Wrappers.lambdaQuery(Permission.class)

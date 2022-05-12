@@ -13,8 +13,10 @@ import com.kai.bo.vo.RoleVO;
 import com.kai.config.api.Result;
 import com.kai.config.api.exception.ApiException;
 import com.kai.config.redis.service.RedisService;
+import com.kai.entity.Admin;
 import com.kai.entity.Role;
 import com.kai.mapper.RoleMapper;
+import com.kai.service.AdminService;
 import com.kai.service.PermissionService;
 import com.kai.service.RoleService;
 import com.kai.util.bo.SelectVO;
@@ -38,9 +40,8 @@ import static com.kai.util.constant.RedisConstant.REDIS_PERMISSION_ROLE;
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
 
-    // todo: 2021/6/4
-//    @Autowired
-//    private AdminService adminService;
+    @Autowired
+    private AdminService adminService;
     @Autowired
     private PermissionService permissionService;
     @Autowired
@@ -70,7 +71,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         boolean b = role.insert();
         if (b) {
             // 根据角色id查询权限并更新缓存
-            permissionService.getAndUpdatePermissionRole(role.getRoleId());
+            permissionService.updateRolePermissionCache(role.getRoleId());
         }
         return b;
     }
@@ -88,19 +89,18 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         boolean b = role.updateById();
         if (b) {
             // 根据角色id查询权限并更新缓存
-            permissionService.getAndUpdatePermissionRole(role.getRoleId());
+            permissionService.updateRolePermissionCache(role.getRoleId());
         }
         return b;
     }
 
     @Override
     public boolean delete(List<Integer> roleIds) {
-        // todo: 2021/6/4
-//        int count = adminService.count(new QueryWrapper<Admin>()
-//                .in(Admin::getRoleId, roleIds));
-//        if (count > 0) {
-//            throw new MyException("该角色绑定了用户，请先删除用户");
-//        }
+        int count = adminService.count(new LambdaQueryWrapper<Admin>()
+                .in(Admin::getRoleId, roleIds));
+        if (count > 0) {
+            throw new ApiException("该角色绑定了用户，请先删除用户");
+        }
         boolean b = this.removeByIds(roleIds);
         if (b) {
             // 删除角色对应权限缓存

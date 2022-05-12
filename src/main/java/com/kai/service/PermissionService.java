@@ -1,9 +1,8 @@
 package com.kai.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.kai.util.bo.TreeVO;
-import com.kai.bo.vo.PermissionTreeVO;
 import com.kai.entity.Permission;
+import com.kai.util.bo.TreeVO;
 
 import java.util.List;
 import java.util.Set;
@@ -26,14 +25,14 @@ public interface PermissionService extends IService<Permission> {
     List<TreeVO> getTree(Integer roleId);
 
     /**
-     * 查询权限树并更新缓存
+     * 更新权限树缓存
      */
-    List<TreeVO> getAndUpdateTree();
+    List<TreeVO> updatePermissionTreeCache();
 
     /**
-     * 查询所有权限并更新缓存
+     * 更新权限缓存
      */
-    List<String> getAndUpdatePermissions();
+    List<String> updatePermissionCache();
 
     /**
      * 查询所有权限
@@ -48,10 +47,10 @@ public interface PermissionService extends IService<Permission> {
     Set<String> getPermissionRole(List<Integer> roleIds);
 
     /**
-     * 根据角色id查询权限并更新缓存
+     * 根据角色id更新角色权限缓存
      *
      * @param roleId 角色id
      */
-    List<String> getAndUpdatePermissionRole(Integer roleId);
+    List<String> updateRolePermissionCache(Integer roleId);
 
 }
