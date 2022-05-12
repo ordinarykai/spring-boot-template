@@ -51,7 +51,6 @@ public class SwaggerConfig {
                 .build()
                 // Swagger生产环境严禁开启访问
                 .enable(!env.equals(PRO_ENV))
-                .groupName("总接口")
                 .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts());
     }
