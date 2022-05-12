@@ -54,9 +54,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             return permissionTree;
         }
         for (TreeVO permission : permissionTree) {
-            if (permissionIds.contains(permission.getValue())) {
-                permission.setCheckArr("1");
-            }
+            permission.setCheckArr(permissionIds.contains(permission.getValue()) ? "1" : "0");
         }
         return permissionTree;
     }

@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2022/3/12 15:33
  */
 @Slf4j
-public abstract class ExcelUtil {
+public class ExcelUtil {
 
     // 参考文档：https://alibaba-easyexcel.github.io/
 

@@ -28,8 +28,6 @@ import static org.springframework.http.HttpMethod.*;
  * @date 2022/3/12 14:02
  */
 @Configuration
-//使用knife4j文档时解开该注解
-//@EnableSwagger2WebMvc
 public class SwaggerConfig {
 
     /**

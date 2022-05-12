@@ -1,10 +1,5 @@
 package com.kai.util.sms.ali;
 
-/**
- * @author kai
- * @date 2022/3/12 14:47
- */
-
 import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -23,9 +18,10 @@ import java.util.Objects;
 
 /**
  * @author kai
+ * @date 2022/3/12 14:47
  */
 @Slf4j
-public abstract class AliYunSmsUtil {
+public class AliYunSmsUtil {
 
     //参考文档：https://help.aliyun.com/document_detail/55284.html
 
@@ -71,10 +67,12 @@ public abstract class AliYunSmsUtil {
             log.info("短信发送返回数据：{}", response.getData());
             JSONObject data = JSON.parseObject(response.getData());
             Object code = data.get("Code");
-            if ("ok".equalsIgnoreCase(code.toString())) {
+            String okCode = "ok";
+            if (okCode.equalsIgnoreCase(code.toString())) {
                 return;
             }
-            if ("isv.BUSINESS_LIMIT_CONTROL".equals(code)) {
+            String limitCode = "isv.BUSINESS_LIMIT_CONTROL";
+            if (limitCode.equals(code)) {
                 throw new ApiException("短信发送过于频繁，请稍后重试");
             }
             String msg = data.get("Message").toString();

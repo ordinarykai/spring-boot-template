@@ -18,7 +18,7 @@ public class TreeVO {
     private String label;
 
     @ApiModelProperty("是否选中 (0.未选中 1.选中)")
-    private String checkArr = "0";
+    private String checkArr;
 
     @ApiModelProperty("下级")
     private List<TreeVO> children;

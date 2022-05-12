@@ -31,7 +31,7 @@ public class PermissionTreeVO {
     private String icon;
 
     @ApiModelProperty("是否选中 (0.未选中 1.选中)")
-    private Integer checkArr = 0;
+    private Integer checkArr;
 
     @ApiModelProperty("权限")
     private List<PermissionTreeVO> children;

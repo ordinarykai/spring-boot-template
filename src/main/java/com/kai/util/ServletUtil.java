@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author kai
  * @date 2022/3/12 13:39
  */
-public abstract class ServletUtil {
+public class ServletUtil {
 
     public static ServletRequestAttributes getRequestAttributes() {
         return (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

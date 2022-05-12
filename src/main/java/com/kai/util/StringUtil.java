@@ -11,7 +11,7 @@ import java.util.UUID;
  * @author kai
  * @date 2022/3/12 13:39
  */
-public abstract class StringUtil extends StringUtils {
+public class StringUtil extends StringUtils {
 
     /**
      * 生成uuid

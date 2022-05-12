@@ -16,7 +16,7 @@ import static com.kai.util.constant.CommonConstant.TOKEN;
  * @author kai
  * @date 2022/3/12 13:39
  */
-public abstract class LoginUtil {
+public class LoginUtil {
 
     private static final RedisService redisService = applicationContext.getBean(RedisService.class);
 
