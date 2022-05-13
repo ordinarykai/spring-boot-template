@@ -25,7 +25,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
             %n是换行符
         -->
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%5p) %boldMagenta(${PID:-}) --- [%15.15t] %cyan(%-40.40logger{39}) %4L : %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%5p) %boldMagenta(${PID:-}) [%X{traceId}] --- [%15.15t] %cyan(%-40.40logger{39}) %4L : %m%n</pattern>
         </layout>
     </appender>
 
@@ -58,7 +58,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
         </rollingPolicy>
         <!-- 日志输出格式： -->
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:-} --- [%15.15t] %-40.40logger{39} %4L : %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:-} [%X{traceId}] --- [%15.15t] %-40.40logger{39} %4L : %m%n</pattern>
         </layout>
     </appender>
 
@@ -92,7 +92,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
         </rollingPolicy>
         <!-- 日志输出格式： -->
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:-} --- [%15.15t] %-40.40logger{39} %4L : %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:-} [%X{traceId}] --- [%15.15t] %-40.40logger{39} %4L : %m%n</pattern>
         </layout>
         <!--只存储错误日志-->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">

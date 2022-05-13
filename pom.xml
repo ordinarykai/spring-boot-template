@@ -23,6 +23,7 @@
         <knife4j-boot-starter.version>2.0.7</knife4j-boot-starter.version>
         <sentinel-cloud-starter.version>2020.0.RC1</sentinel-cloud-starter.version>
         <rsa-encrypt-body.version>1.0.1.RELEASE</rsa-encrypt-body.version>
+        <spring-cloud-sleuth.version>2.2.6.RELEASE</spring-cloud-sleuth.version>
         <apache-httpclient.version>4.5.13</apache-httpclient.version>
         <apache-commons-lang3.version>3.12.0</apache-commons-lang3.version>
         <apache-commons-collections4.version>4.4</apache-commons-collections4.version>
@@ -111,6 +112,12 @@
             <groupId>cn.shuibo</groupId>
             <artifactId>rsa-encrypt-body-spring-boot</artifactId>
             <version>${rsa-encrypt-body.version}</version>
+        </dependency>
+        <!--链路追踪，主要用于logback日志打印traceId，区分接口请求日志-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-sleuth-core</artifactId>
+            <version>${spring-cloud-sleuth.version}</version>
         </dependency>
 
         <!--apache工具库-->
