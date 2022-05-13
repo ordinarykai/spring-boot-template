@@ -12,9 +12,9 @@ import com.kai.util.bo.TreeVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
@@ -32,9 +32,9 @@ import static com.kai.util.constant.RedisConstant.REDIS_PERMISSION_TREE;
 @RequestMapping("/api/permission")
 public class PermissionController {
 
-    @Autowired
+    @Resource
     private PermissionService permissionService;
-    @Autowired
+    @Resource
     private RedisService redisService;
 
     @GetMapping

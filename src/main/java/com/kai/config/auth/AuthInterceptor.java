@@ -6,11 +6,11 @@ import com.kai.service.PermissionService;
 import com.kai.util.LoginUtil;
 import com.kai.util.bo.LoginInfo;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,7 +29,7 @@ import static com.kai.util.constant.CommonConstant.TOKEN;
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
 
-    @Autowired
+    @Resource
     private PermissionService permissionService;
     /**
      * 路径匹配器

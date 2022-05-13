@@ -1,10 +1,10 @@
 package com.kai.config;
 
 import com.kai.service.PermissionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 /**
  * 程序初始化
@@ -15,7 +15,7 @@ import javax.annotation.PostConstruct;
 @Component
 public class Initializer {
 
-    @Autowired
+    @Resource
     private PermissionService permissionService;
 
     /**

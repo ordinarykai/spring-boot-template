@@ -10,9 +10,9 @@ import com.kai.service.RoleService;
 import com.kai.util.bo.SelectVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("/api/role")
 public class RoleController {
 
-    @Autowired
+    @Resource
     private RoleService roleService;
 
     @GetMapping

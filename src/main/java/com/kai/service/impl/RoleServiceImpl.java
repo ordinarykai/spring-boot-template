@@ -22,9 +22,9 @@ import com.kai.service.RoleService;
 import com.kai.util.bo.SelectVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -40,11 +40,11 @@ import static com.kai.util.constant.RedisConstant.REDIS_PERMISSION_ROLE;
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
 
-    @Autowired
+    @Resource
     private AdminService adminService;
-    @Autowired
+    @Resource
     private PermissionService permissionService;
-    @Autowired
+    @Resource
     private RedisService redisService;
 
     @Override

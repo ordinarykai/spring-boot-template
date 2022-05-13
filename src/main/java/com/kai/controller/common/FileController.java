@@ -1,19 +1,19 @@
 package com.kai.controller.common;
 
 import cn.hutool.core.io.FileUtil;
+import com.kai.bo.vo.BaseUploadUrlVO;
+import com.kai.bo.vo.FileVO;
 import com.kai.config.UploadConfig;
 import com.kai.config.api.Result;
 import com.kai.config.api.exception.ApiException;
 import com.kai.util.StringUtil;
-import com.kai.bo.vo.BaseUploadUrlVO;
-import com.kai.bo.vo.FileVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +30,7 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping("/api/file")
 public class FileController {
 
-    @Autowired
+    @Resource
     UploadConfig uploadConfig;
 
     @PostMapping

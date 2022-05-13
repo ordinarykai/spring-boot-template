@@ -2,13 +2,14 @@ package com.kai.config;
 
 import com.kai.config.auth.AuthInterceptor;
 import com.kai.config.auth.AuthUriConfig;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import javax.annotation.Resource;
 
 import static com.kai.util.constant.CommonConstant.PRO_ENV;
 
@@ -19,11 +20,11 @@ import static com.kai.util.constant.CommonConstant.PRO_ENV;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    @Autowired
+    @Resource
     private AuthUriConfig authUriConfig;
-    @Autowired
+    @Resource
     private AuthInterceptor authInterceptor;
-    @Autowired
+    @Resource
     private UploadConfig uploadConfig;
     /**
      * springboot配置文件当前环境

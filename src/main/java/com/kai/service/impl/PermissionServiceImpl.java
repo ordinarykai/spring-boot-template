@@ -10,9 +10,9 @@ import com.kai.service.PermissionService;
 import com.kai.service.RoleService;
 import com.kai.util.bo.TreeVO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -32,9 +32,9 @@ import static com.kai.util.constant.RedisConstant.*;
 @Service
 public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permission> implements PermissionService {
 
-    @Autowired
+    @Resource
     private RoleService roleService;
-    @Autowired
+    @Resource
     private RedisService redisService;
 
     @Override
