@@ -1,9 +1,8 @@
 package com.kai.service;
 
 import com.kai.bo.dto.SendSmsDTO;
+import com.kai.bo.vo.CaptchaVO;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -15,12 +14,11 @@ public interface CodeServe {
     /**
      * 获取图形验证码
      */
-    void getCode(HttpServletRequest req,
-                 HttpServletResponse resp) throws IOException;
+    CaptchaVO getCaptchaCode() throws IOException;
 
     /**
      * 发送手机验证码
      */
-    void sendSms(SendSmsDTO dto);
+    void sendSmsCode(SendSmsDTO dto);
 
 }

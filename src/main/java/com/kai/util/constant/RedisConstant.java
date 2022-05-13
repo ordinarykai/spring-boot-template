@@ -12,11 +12,6 @@ public interface RedisConstant {
     String REDIS_LOGIN = "kai:login:";
 
     /**
-     * 手机验证码
-     */
-    String VERIFY_CODE = "kai:verify_code:";
-
-    /**
      * 用户菜单uri缓存
      */
     String REDIS_PERMISSION = "kai:permission";
@@ -30,5 +25,15 @@ public interface RedisConstant {
      * 用户菜单树缓存
      */
     String REDIS_PERMISSION_TREE = "kai:permission:tree";
+
+    /**
+     * 图形验证码
+     */
+    String REDIS_CODE_CAPTCHA = "kai:code:captcha";
+
+    /**
+     * 手机验证码
+     */
+    String REDIS_CODE_SMS = "kai:code:sms";
 
 }

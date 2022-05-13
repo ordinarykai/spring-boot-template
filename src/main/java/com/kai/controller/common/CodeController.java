@@ -1,6 +1,7 @@
 package com.kai.controller.common;
 
 import com.kai.bo.dto.SendSmsDTO;
+import com.kai.bo.vo.CaptchaVO;
 import com.kai.config.api.Result;
 import com.kai.service.CodeServe;
 import io.swagger.annotations.Api;
@@ -8,8 +9,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 
@@ -27,14 +26,15 @@ public class CodeController {
 
     @GetMapping(value = "/captcha")
     @ApiOperation(value = "获取图形验证码", notes = "获取图形验证码")
-    public void getCode(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        codeServe.getCode(req, resp);
+    public Result<CaptchaVO> getCaptchaCode() throws IOException {
+        CaptchaVO captchaVO = codeServe.getCaptchaCode();
+        return Result.success(captchaVO);
     }
 
     @PostMapping(value = "/sms")
     @ApiOperation(value = "发送手机验证码", notes = "发送手机验证码")
-    public Result<Void> sendSms(@RequestBody @Valid SendSmsDTO dto) {
-        codeServe.sendSms(dto);
+    public Result<Void> sendSmsCode(@RequestBody @Valid SendSmsDTO dto) {
+        codeServe.sendSmsCode(dto);
         return Result.success(null, "发送成功");
     }
 
