@@ -37,6 +37,14 @@ public class PermissionController {
     @Resource
     private RedisService redisService;
 
+    @PutMapping(value = "/cache")
+    @ApiOperation(value = "更新权限缓存", notes = "更新权限缓存")
+    public Result<Void> updatePermissionCache() {
+        permissionService.updatePermissionCache();
+        permissionService.updatePermissionTreeCache();
+        return Result.success();
+    }
+
     @GetMapping
     @ApiOperation(value = "查询权限列表", notes = "查询权限列表")
     public Result<List<PermissionVO>> list() {
@@ -46,18 +54,6 @@ public class PermissionController {
         List<Permission> permissionList = permissionService.list(queryWrapper);
         List<PermissionVO> permissionVOList = getPermissionVOList(permissionList, TOP_PARENT_ID);
         return Result.success(permissionVOList);
-    }
-
-    public List<PermissionVO> getPermissionVOList(List<Permission> permissionList, Integer parentId) {
-        return permissionList.stream()
-                .filter(permission -> permission.getParentId().equals(parentId))
-                .map(permission -> {
-                    PermissionVO permissionVO = new PermissionVO();
-                    BeanUtils.copyProperties(permission, permissionVO);
-                    List<PermissionVO> permissionVOList = getPermissionVOList(permissionList, permission.getPermissionId());
-                    permissionVO.setChildren(permissionVOList);
-                    return permissionVO;
-                }).collect(Collectors.toList());
     }
 
     @GetMapping("/tree/select")
@@ -73,19 +69,6 @@ public class PermissionController {
         treeSelectVO.setLabel("顶级菜单");
         treeSelectVO.setChildren(selectList);
         return Result.success(Collections.singletonList(treeSelectVO));
-    }
-
-    public List<TreeSelectVO> getTreeSelect(List<Permission> permissionList, Integer parentId) {
-        return permissionList.stream()
-                .filter(permission -> permission.getParentId().equals(parentId))
-                .map(permission -> {
-                    TreeSelectVO treeSelectVO = new TreeSelectVO();
-                    treeSelectVO.setId(permission.getPermissionId());
-                    treeSelectVO.setLabel(permission.getName());
-                    List<TreeSelectVO> treeSelect = getTreeSelect(permissionList, permission.getPermissionId());
-                    treeSelectVO.setChildren(treeSelect);
-                    return treeSelectVO;
-                }).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/tree")
@@ -114,14 +97,6 @@ public class PermissionController {
         return b ? Result.success() : Result.failed();
     }
 
-    @PutMapping(value = "/cache")
-    @ApiOperation(value = "更新权限缓存", notes = "更新权限缓存")
-    public Result<Void> updatePermissionCache() {
-        permissionService.updatePermissionCache();
-        permissionService.updatePermissionTreeCache();
-        return Result.success();
-    }
-
     @DeleteMapping("/{permissionIds}")
     @ApiOperation(value = "删除权限", notes = "删除权限")
     public Result<Void> delete(
@@ -130,6 +105,31 @@ public class PermissionController {
         redisService.del(REDIS_PERMISSION_TREE);
         boolean b = permissionService.removeByIds(permissionIds);
         return b ? Result.success() : Result.failed();
+    }
+
+    private List<PermissionVO> getPermissionVOList(List<Permission> permissionList, Integer parentId) {
+        return permissionList.stream()
+                .filter(permission -> permission.getParentId().equals(parentId))
+                .map(permission -> {
+                    PermissionVO permissionVO = new PermissionVO();
+                    BeanUtils.copyProperties(permission, permissionVO);
+                    List<PermissionVO> permissionVOList = getPermissionVOList(permissionList, permission.getPermissionId());
+                    permissionVO.setChildren(permissionVOList);
+                    return permissionVO;
+                }).collect(Collectors.toList());
+    }
+
+    private List<TreeSelectVO> getTreeSelect(List<Permission> permissionList, Integer parentId) {
+        return permissionList.stream()
+                .filter(permission -> permission.getParentId().equals(parentId))
+                .map(permission -> {
+                    TreeSelectVO treeSelectVO = new TreeSelectVO();
+                    treeSelectVO.setId(permission.getPermissionId());
+                    treeSelectVO.setLabel(permission.getName());
+                    List<TreeSelectVO> treeSelect = getTreeSelect(permissionList, permission.getPermissionId());
+                    treeSelectVO.setChildren(treeSelect);
+                    return treeSelectVO;
+                }).collect(Collectors.toList());
     }
 
 }
