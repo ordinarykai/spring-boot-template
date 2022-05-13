@@ -67,7 +67,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                     .addResourceLocations("classpath:/permission/");
             // 生产环境严禁开启远程日志访问
             registry.addResourceHandler("/logs/**")
-                    .addResourceLocations(logPath);
+                    .addResourceLocations("file:" + logPath);
         }
         registry.addResourceHandler("/upload/**")
                 .addResourceLocations("file:" + uploadConfig.getPath());
