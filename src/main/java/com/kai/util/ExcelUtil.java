@@ -55,7 +55,6 @@ public class ExcelUtil {
         return dataList;
     }
 
-
     /**
      * 写出Excel到流
      *
@@ -79,6 +78,5 @@ public class ExcelUtil {
                 .sheet()
                 .doWrite(dataList);
     }
-
 
 }
