@@ -24,6 +24,11 @@ spring:
             data-type: json # 数据格式
             rule-type: FLOW # 规则类型
 
+server:
+  servlet:
+    encoding:
+      force: true #解决静态资源乱码问题
+
 mybatis-plus:
   type-aliases-package: com.kai.entity
   mapper-locations: classpath:/xml/*Mapper.xml
