@@ -13,16 +13,16 @@ import javax.validation.constraints.Size;
 @Data
 public class RoleAddDTO {
 
-    @ApiModelProperty("角色名称")
+    @ApiModelProperty(value = "角色名称",example = "管理员")
     @NotBlank(message = "请输入角色名称")
     @Size(min = 2, max = 20, message = "角色名称限定2-20位字符")
     private String roleName;
 
-    @ApiModelProperty(value = "描述")
+    @ApiModelProperty(value = "描述",example = "管理员")
     @Size(max = 50, message = "描述最长不超过50字符")
     private String description;
 
-    @ApiModelProperty("功能项id集合, 用英文,分隔")
+    @ApiModelProperty(value = "功能项id集合, 用英文,分隔",example = "1,2,3")
     private String funIds;
 
 }
