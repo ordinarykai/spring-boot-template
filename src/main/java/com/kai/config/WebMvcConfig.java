@@ -31,6 +31,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
      */
     @Value("${spring.profiles.active}")
     private String env;
+    /**
+     * logback日志存储路径
+     */
+    @Value("${logback.path}")
+    private String logPath;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -56,10 +61,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // 内部权限编辑页面放在resources下的permission目录，生产环境严禁开启访问
         if (!env.equals(PRO_ENV)) {
+            // 内部权限编辑页面放在resources下的permission目录，生产环境严禁开启访问
             registry.addResourceHandler("/permission/**")
                     .addResourceLocations("classpath:/permission/");
+            // 生产环境严禁开启远程日志访问
+            registry.addResourceHandler("/logs/**")
+                    .addResourceLocations(logPath);
         }
         registry.addResourceHandler("/upload/**")
                 .addResourceLocations("file:" + uploadConfig.getPath());

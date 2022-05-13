@@ -7,7 +7,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 
     <!-- 定义日志的根目录 -->
-    <springProperty scope="context" name="LOG_HOME" source="logback.filePath"/>
+    <springProperty scope="context" name="LOG_HOME" source="logback.path"/>
     <!-- 定义日志文件名称前缀 -->
     <springProperty scope="context" name="APPLICATION_NAME" source="spring.application.name"/>
     <!-- 定义本项目Path From Source Root -->

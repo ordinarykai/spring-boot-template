@@ -11,9 +11,9 @@
       "description": "Description for auth.exclude-path-patterns."
     },
     {
-      "name": "logback.filePath",
+      "name": "logback.path",
       "type": "java.lang.String",
-      "description": "Description for logback.filePath."
+      "description": "Description for logback.path."
     },
     {
       "name": "upload.path",

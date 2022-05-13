@@ -17,7 +17,7 @@ logging:
       kai: INFO
 
 logback:
-  filePath: /application/spring-boot-template/logs/  # 日志文件存储目录
+  path: /application/spring-boot-template/logs/  # 日志文件存储目录
 
 upload:
   path: /application/spring-boot-template/upload/  # 上传文件存储目录

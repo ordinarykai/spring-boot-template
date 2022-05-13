@@ -50,10 +50,10 @@ public class FileController {
             log.error("上传文件发生异常", e);
             throw new ApiException("上传文件发生异常");
         }
-        FileVO fileDTO = new FileVO();
-        fileDTO.setName(fileName);
-        fileDTO.setUri(parentDirectory + fileName);
-        return Result.success(fileDTO);
+        FileVO fileVO = new FileVO();
+        fileVO.setName(fileName);
+        fileVO.setUri(parentDirectory + fileName);
+        return Result.success(fileVO);
     }
 
     @GetMapping("/baseUploadUrl")
