@@ -24,5 +24,11 @@
       "name": "upload.url",
       "type": "java.lang.String",
       "description": "Description for upload.url."
+    },
+    {
+      "name": "api.version",
+      "type": "java.lang.String",
+      "description": "Description for api.version."
     }
-  ] }
+  ]
+}
