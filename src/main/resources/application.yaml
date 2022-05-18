@@ -29,9 +29,6 @@ server:
     encoding:
       force: true #解决静态资源乱码问题
 
-api:
-  version: v1
-
 mybatis-plus:
   type-aliases-package: com.kai.entity
   mapper-locations: classpath:/xml/*Mapper.xml

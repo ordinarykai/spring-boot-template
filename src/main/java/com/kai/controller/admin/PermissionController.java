@@ -29,7 +29,7 @@ import static com.kai.util.constant.RedisConstant.REDIS_PERMISSION_TREE;
  */
 @Api(tags = "权限管理")
 @RestController
-@RequestMapping("${api.version}/permission")
+@RequestMapping("/permission")
 public class PermissionController {
 
     @Resource

@@ -1,13 +1,17 @@
 package com.kai.config;
 
+import com.kai.config.api.version.VersionRequestMappingHandlerMapping;
 import com.kai.config.auth.AuthInterceptor;
 import com.kai.config.auth.AuthUriConfig;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import javax.annotation.Resource;
 
@@ -18,7 +22,7 @@ import static com.kai.util.constant.CommonConstant.PRO_ENV;
  * @date 2022/3/12 14:56
  */
 @Configuration
-public class WebMvcConfig implements WebMvcConfigurer {
+public class WebMvcConfig implements WebMvcConfigurer, WebMvcRegistrations {
 
     @Resource
     private AuthUriConfig authUriConfig;
@@ -72,6 +76,19 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/upload/**")
                 .addResourceLocations("file:" + uploadConfig.getPath());
         WebMvcConfigurer.super.addResourceHandlers(registry);
+    }
+
+    /**
+     * 配置注册自定义的RequestMappingHandlerMapping
+     */
+    @Override
+    public RequestMappingHandlerMapping getRequestMappingHandlerMapping() {
+        return new VersionRequestMappingHandlerMapping();
+    }
+
+    @Bean
+    protected RequestMappingHandlerMapping customRequestMappingHandlerMapping() {
+        return new VersionRequestMappingHandlerMapping();
     }
 
 }

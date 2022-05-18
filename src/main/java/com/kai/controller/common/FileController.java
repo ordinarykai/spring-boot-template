@@ -27,7 +27,7 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 @Api(tags = "文件上传")
 @RestController
-@RequestMapping("${api.version}/file")
+@RequestMapping("/file")
 public class FileController {
 
     @Resource

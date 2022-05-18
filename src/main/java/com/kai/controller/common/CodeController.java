@@ -18,7 +18,7 @@ import java.io.IOException;
  */
 @Api(tags = "验证码")
 @RestController
-@RequestMapping("${api.version}/code")
+@RequestMapping("/code")
 public class CodeController {
 
     @Resource
