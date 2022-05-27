@@ -6,9 +6,9 @@ import com.kai.bo.dto.RoleAddDTO;
 import com.kai.bo.dto.RolePageDTO;
 import com.kai.bo.dto.RoleUpdateDTO;
 import com.kai.bo.vo.RoleVO;
-import com.kai.config.api.Result;
+import com.kai.boot.api.Result;
+import com.kai.boot.util.bo.SelectVO;
 import com.kai.entity.Role;
-import com.kai.util.bo.SelectVO;
 
 import java.util.List;
 

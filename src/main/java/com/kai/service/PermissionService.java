@@ -1,8 +1,8 @@
 package com.kai.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.kai.boot.util.bo.TreeVO;
 import com.kai.entity.Permission;
-import com.kai.util.bo.TreeVO;
 
 import java.util.List;
 import java.util.Set;

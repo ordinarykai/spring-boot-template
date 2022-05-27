@@ -40,9 +40,10 @@ mybatis-plus:
 
 auth:
   add-path-patterns:
-    - "/adminApi/**"
-    - "/userApi/**"
+    - "/**"
   exclude-path-patterns:
-    - "/adminApi/login/**"
-    - "/adminApi/permission/**"
-    - "/userApi/login/**"
+    - "/login/**"
+    - "/permission/**"
+    - "/v3/api-docs/**"
+    - "/swagger-ui/**"
+    - "/swagger-resources/**"

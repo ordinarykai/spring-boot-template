@@ -5,12 +5,12 @@ import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.captcha.generator.RandomGenerator;
 import com.kai.bo.dto.SendSmsDTO;
 import com.kai.bo.vo.CaptchaVO;
-import com.kai.config.api.exception.ApiException;
-import com.kai.config.redis.service.RedisService;
+import com.kai.boot.api.exception.ApiException;
+import com.kai.boot.redis.service.RedisService;
+import com.kai.boot.util.StringUtil;
+import com.kai.boot.util.ali.AliYunSmsUtil;
+import com.kai.boot.util.ali.AliYunTemplate;
 import com.kai.service.CodeServe;
-import com.kai.util.StringUtil;
-import com.kai.util.sms.ali.AliYunSmsUtil;
-import com.kai.util.sms.ali.AliYunTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
-import static com.kai.util.constant.RedisConstant.REDIS_CODE_CAPTCHA;
-import static com.kai.util.constant.RedisConstant.REDIS_CODE_SMS;
+import static com.kai.boot.constant.RedisConstant.REDIS_CODE_CAPTCHA;
+import static com.kai.boot.constant.RedisConstant.REDIS_CODE_SMS;
 
 /**
  * @author kai

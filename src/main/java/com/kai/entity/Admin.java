@@ -35,7 +35,7 @@ public class Admin extends Model<Admin> {
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.adminId;
     }
 

@@ -3,12 +3,12 @@ package com.kai.controller.admin;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.kai.bo.vo.PermissionVO;
-import com.kai.config.api.Result;
-import com.kai.config.redis.service.RedisService;
+import com.kai.boot.api.Result;
+import com.kai.boot.redis.service.RedisService;
+import com.kai.boot.util.bo.TreeSelectVO;
+import com.kai.boot.util.bo.TreeVO;
 import com.kai.entity.Permission;
 import com.kai.service.PermissionService;
-import com.kai.util.bo.TreeSelectVO;
-import com.kai.util.bo.TreeVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
@@ -20,8 +20,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.kai.util.constant.CommonConstant.TOP_PARENT_ID;
-import static com.kai.util.constant.RedisConstant.REDIS_PERMISSION_TREE;
+import static com.kai.boot.constant.CommonConstant.TOP_PARENT_ID;
+import static com.kai.boot.constant.RedisConstant.REDIS_PERMISSION_TREE;
 
 /**
  * @author kai

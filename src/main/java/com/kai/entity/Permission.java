@@ -78,7 +78,7 @@ public class Permission extends Model<Permission> {
     }
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.permissionId;
     }
 

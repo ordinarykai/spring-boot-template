@@ -10,16 +10,16 @@ import com.kai.bo.dto.RoleAddDTO;
 import com.kai.bo.dto.RolePageDTO;
 import com.kai.bo.dto.RoleUpdateDTO;
 import com.kai.bo.vo.RoleVO;
-import com.kai.config.api.Result;
-import com.kai.config.api.exception.ApiException;
-import com.kai.config.redis.service.RedisService;
+import com.kai.boot.api.Result;
+import com.kai.boot.api.exception.ApiException;
+import com.kai.boot.redis.service.RedisService;
+import com.kai.boot.util.bo.SelectVO;
 import com.kai.entity.Admin;
 import com.kai.entity.Role;
 import com.kai.mapper.RoleMapper;
 import com.kai.service.AdminService;
 import com.kai.service.PermissionService;
 import com.kai.service.RoleService;
-import com.kai.util.bo.SelectVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -29,9 +29,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.kai.util.constant.CommonConstant.DISABLE;
-import static com.kai.util.constant.CommonConstant.ENABLE;
-import static com.kai.util.constant.RedisConstant.REDIS_PERMISSION_ROLE;
+import static com.kai.boot.constant.CommonConstant.DISABLE;
+import static com.kai.boot.constant.CommonConstant.ENABLE;
+import static com.kai.boot.constant.RedisConstant.REDIS_PERMISSION_ROLE;
 
 /**
  * @author kai
@@ -61,7 +61,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     public boolean add(RoleAddDTO req) {
-        int count = this.count(Wrappers.lambdaQuery(Role.class)
+        long count = this.count(Wrappers.lambdaQuery(Role.class)
                 .eq(Role::getRoleName, req.getRoleName().trim()));
         if (count > 0) {
             throw new ApiException("该角色名称已存在，请重新录入");
@@ -78,7 +78,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     public boolean update(RoleUpdateDTO dto) {
-        int count = this.count(Wrappers.lambdaQuery(Role.class)
+        long count = this.count(Wrappers.lambdaQuery(Role.class)
                 .eq(Role::getRoleName, dto.getRoleName().trim())
                 .ne(Role::getRoleId, dto.getRoleId()));
         if (count > 0) {
@@ -96,7 +96,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     public boolean delete(List<Integer> roleIds) {
-        int count = adminService.count(new LambdaQueryWrapper<Admin>()
+        long count = adminService.count(new LambdaQueryWrapper<Admin>()
                 .in(Admin::getRoleId, roleIds));
         if (count > 0) {
             throw new ApiException("该角色绑定了用户，请先删除用户");

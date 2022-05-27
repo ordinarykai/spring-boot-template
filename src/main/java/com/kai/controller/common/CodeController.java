@@ -2,7 +2,7 @@ package com.kai.controller.common;
 
 import com.kai.bo.dto.SendSmsDTO;
 import com.kai.bo.vo.CaptchaVO;
-import com.kai.config.api.Result;
+import com.kai.boot.api.Result;
 import com.kai.service.CodeServe;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

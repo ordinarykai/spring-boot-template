@@ -1,6 +1,6 @@
 package com.kai.bo.dto;
 
-import com.kai.util.bo.PageDTO;
+import com.kai.boot.util.bo.PageDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

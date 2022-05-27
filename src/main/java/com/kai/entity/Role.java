@@ -81,7 +81,7 @@ public class Role extends Model<Role> {
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.roleId;
     }
 

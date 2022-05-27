@@ -2,13 +2,13 @@ package com.kai.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.kai.config.redis.service.RedisService;
+import com.kai.boot.redis.service.RedisService;
+import com.kai.boot.util.bo.TreeVO;
 import com.kai.entity.Permission;
 import com.kai.entity.Role;
 import com.kai.mapper.PermissionMapper;
 import com.kai.service.PermissionService;
 import com.kai.service.RoleService;
-import com.kai.util.bo.TreeVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.kai.util.constant.RedisConstant.*;
+import static com.kai.boot.constant.RedisConstant.*;
 
 /**
  * <p>
