@@ -3,13 +3,12 @@ package com.kai.service.impl;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.captcha.generator.RandomGenerator;
-import com.kai.bo.dto.SendSmsDTO;
-import com.kai.bo.vo.CaptchaVO;
-import com.kai.boot.api.exception.ApiException;
-import com.kai.boot.redis.service.RedisService;
-import com.kai.boot.util.StringUtil;
-import com.kai.boot.util.ali.AliYunSmsUtil;
-import com.kai.boot.util.ali.AliYunTemplate;
+import com.easy.boot.core.api.exception.ApiException;
+import com.easy.boot.core.redis.service.RedisService;
+import com.easy.boot.core.util.StringUtil;
+import com.easy.boot.core.util.ali.AliYunSmsTemplate;
+import com.kai.dto.SendSmsDTO;
+import com.kai.dto.CaptchaVO;
 import com.kai.service.CodeServe;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +17,8 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
-import static com.kai.boot.constant.RedisConstant.REDIS_CODE_CAPTCHA;
-import static com.kai.boot.constant.RedisConstant.REDIS_CODE_SMS;
+import static com.easy.boot.core.constant.RedisConstant.REDIS_CODE_CAPTCHA;
+import static com.easy.boot.core.constant.RedisConstant.REDIS_CODE_SMS;
 
 /**
  * @author kai
@@ -39,6 +38,7 @@ public class CodeServeImpl implements CodeServe {
 
     @Resource
     private RedisService redisService;
+    private AliYunSmsTemplate aliYunSmsTemplate;
 
     @Override
     public CaptchaVO getCaptchaCode() throws IOException {
@@ -75,7 +75,7 @@ public class CodeServeImpl implements CodeServe {
         // 阿里云短信
         LinkedHashMap<String, String> templateParamMap = new LinkedHashMap<>();
         templateParamMap.put("code", verifyCode);
-        AliYunSmsUtil.sendSms(AliYunTemplate.COMMON_SMS, phone, templateParamMap);
+        aliYunSmsTemplate.sendSms("1234555556", phone, templateParamMap);
     }
 
 }

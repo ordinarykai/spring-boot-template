@@ -3,11 +3,7 @@ spring:
     name: spring-boot-template
   profiles:
     active: dev
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: 1024MB
-      max-request-size: 1024MB
+    include: core
   cloud:
     sentinel:
       enabled: true
@@ -23,11 +19,6 @@ spring:
             data-id: ${spring.application.name}-flow-rule # Nacos 配置集编号
             data-type: json # 数据格式
             rule-type: FLOW # 规则类型
-
-server:
-  servlet:
-    encoding:
-      force: true #解决静态资源乱码问题
 
 mybatis-plus:
   type-aliases-package: com.kai.entity
@@ -47,3 +38,14 @@ auth:
     - "/v3/api-docs/**"
     - "/swagger-ui/**"
     - "/swagger-resources/**"
+
+ali-yun:
+  sms:
+    access-key-id: 123456
+    access-key-secret: 123456
+    ali-yun-sms-channel-map:
+      channel-001:
+        template-name: name
+        sign-name: name
+        template-code: code
+        template-content: content

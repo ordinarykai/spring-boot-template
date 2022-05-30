@@ -11,6 +11,10 @@ spring:
     port: 6379
     database: 0
 
+swagger:
+  enable: true
+  base-package: com.kai.controller
+
 logging:
   level:
     com:

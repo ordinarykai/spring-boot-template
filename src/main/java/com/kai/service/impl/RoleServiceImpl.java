@@ -6,14 +6,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.kai.bo.dto.RoleAddDTO;
-import com.kai.bo.dto.RolePageDTO;
-import com.kai.bo.dto.RoleUpdateDTO;
-import com.kai.bo.vo.RoleVO;
-import com.kai.boot.api.Result;
-import com.kai.boot.api.exception.ApiException;
-import com.kai.boot.redis.service.RedisService;
-import com.kai.boot.util.bo.SelectVO;
+import com.easy.boot.core.api.Result;
+import com.easy.boot.core.api.exception.ApiException;
+import com.easy.boot.core.redis.service.RedisService;
+import com.easy.boot.core.util.bo.SelectVO;
+import com.kai.dto.RoleAddDTO;
+import com.kai.dto.RolePageDTO;
+import com.kai.dto.RoleUpdateDTO;
+import com.kai.dto.RoleVO;
 import com.kai.entity.Admin;
 import com.kai.entity.Role;
 import com.kai.mapper.RoleMapper;
@@ -29,9 +29,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.kai.boot.constant.CommonConstant.DISABLE;
-import static com.kai.boot.constant.CommonConstant.ENABLE;
-import static com.kai.boot.constant.RedisConstant.REDIS_PERMISSION_ROLE;
+import static com.easy.boot.core.constant.CommonConstant.DISABLE;
+import static com.easy.boot.core.constant.CommonConstant.ENABLE;
+import static com.easy.boot.core.constant.RedisConstant.REDIS_PERMISSION_ROLE;
 
 /**
  * @author kai

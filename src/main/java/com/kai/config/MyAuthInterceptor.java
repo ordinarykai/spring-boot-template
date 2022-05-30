@@ -1,7 +1,8 @@
 package com.kai.config;
 
-import com.kai.boot.auth.AuthInterceptor;
-import com.kai.boot.util.LoginUtil;
+import com.easy.boot.core.auth.AuthInterceptor;
+import com.easy.boot.core.auth.AuthProperties;
+import com.easy.boot.core.auth.AuthUtil;
 import com.kai.service.PermissionService;
 import org.springframework.stereotype.Component;
 
@@ -15,21 +16,19 @@ import java.util.Set;
  * @author kai
  * @date 2022/3/12 14:21
  */
-@Component("authInterceptor")
+@Component
 public class MyAuthInterceptor extends AuthInterceptor {
 
     @Resource
     private PermissionService permissionService;
-    @Resource
-    private LoginUtil loginUtil;
 
-    public MyAuthInterceptor(LoginUtil loginUtil) {
-        super(loginUtil);
+    public MyAuthInterceptor(AuthProperties authProperties) {
+        super(authProperties);
     }
 
     @Override
     public Set<String> getPresentUserPermissions() {
-        List<Integer> roleIds = loginUtil.get().getRoleIds();
+        List<Integer> roleIds = AuthUtil.get().getRoleIds();
         return permissionService.getPermissionRole(roleIds);
     }
 

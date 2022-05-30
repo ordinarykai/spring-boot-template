@@ -1,12 +1,12 @@
 package com.kai.controller.admin;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.kai.bo.dto.RoleAddDTO;
-import com.kai.bo.dto.RolePageDTO;
-import com.kai.bo.dto.RoleUpdateDTO;
-import com.kai.bo.vo.RoleVO;
-import com.kai.boot.api.Result;
-import com.kai.boot.util.bo.SelectVO;
+import com.kai.dto.RoleAddDTO;
+import com.kai.dto.RolePageDTO;
+import com.kai.dto.RoleUpdateDTO;
+import com.kai.dto.RoleVO;
+import com.easy.boot.core.api.Result;
+import com.easy.boot.core.util.bo.SelectVO;
 import com.kai.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

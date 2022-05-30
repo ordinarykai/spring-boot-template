@@ -1,4 +1,4 @@
-package com.kai.bo.vo;
+package com.kai.dto;
 
 import com.kai.entity.Permission;
 import com.kai.service.PermissionService;

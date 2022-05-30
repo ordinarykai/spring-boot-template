@@ -1,12 +1,12 @@
 package com.kai.controller.common;
 
 import cn.hutool.core.io.FileUtil;
-import com.kai.bo.vo.BaseUploadUrlVO;
-import com.kai.bo.vo.FileVO;
-import com.kai.boot.UploadConfig;
-import com.kai.boot.api.Result;
-import com.kai.boot.api.exception.ApiException;
-import com.kai.boot.util.StringUtil;
+import com.easy.boot.core.UploadProperties;
+import com.easy.boot.core.api.Result;
+import com.easy.boot.core.api.exception.ApiException;
+import com.easy.boot.core.util.StringUtil;
+import com.kai.dto.BaseUploadUrlVO;
+import com.kai.dto.FileVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -31,13 +31,13 @@ import java.time.format.DateTimeFormatter;
 public class FileController {
 
     @Resource
-    UploadConfig uploadConfig;
+    UploadProperties uploadProperties;
 
     @PostMapping
     @ApiOperation(value = "上传文件", notes = "上传文件")
     public Result<FileVO> upload(@RequestPart(value = "file") MultipartFile file) {
         //上传文件存储根目录
-        String path = uploadConfig.getPath();
+        String path = uploadProperties.getPath();
         //上传文件上级目录
         String parentDirectory = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM")) + File.separator;
         //随机文件名
@@ -60,7 +60,7 @@ public class FileController {
     @ApiOperation(value = "获取文件地址前缀", notes = "获取文件地址前缀")
     public Result<BaseUploadUrlVO> getBaseUploadUrl() {
         BaseUploadUrlVO baseUploadUrlDTO = new BaseUploadUrlVO();
-        baseUploadUrlDTO.setBaseUploadUrl(uploadConfig.getUrl());
+        baseUploadUrlDTO.setBaseUploadUrl(uploadProperties.getUrl());
         return Result.success(baseUploadUrlDTO);
     }
 

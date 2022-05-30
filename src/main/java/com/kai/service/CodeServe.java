@@ -1,7 +1,7 @@
 package com.kai.service;
 
-import com.kai.bo.dto.SendSmsDTO;
-import com.kai.bo.vo.CaptchaVO;
+import com.kai.dto.SendSmsDTO;
+import com.kai.dto.CaptchaVO;
 
 import java.io.IOException;
 

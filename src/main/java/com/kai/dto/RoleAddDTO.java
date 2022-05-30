@@ -1,4 +1,4 @@
-package com.kai.bo.dto;
+package com.kai.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
