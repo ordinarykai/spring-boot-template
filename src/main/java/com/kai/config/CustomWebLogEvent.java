@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
  * @author kai
  */
 @Component
-public class MyWebLogEvent extends WebLogEvent {
+public class CustomWebLogEvent extends WebLogEvent {
 
     /**
      * 日志入库
      */
     @Override
-    public void savaDatabase(WebLog webLog) {
+    public void after(WebLog webLog) {
         // TODO: 2022/5/30 日志入库
     }
 
