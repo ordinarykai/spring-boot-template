@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.easy.boot</groupId>
-        <artifactId>parent</artifactId>
-        <version>1.0.0</version>
+        <groupId>io.github.ordinarykai</groupId>
+        <artifactId>easy-boot-parent</artifactId>
+        <version>1.5.0</version>
         <relativePath/>
     </parent>
 
@@ -22,9 +22,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.easy.boot</groupId>
-            <artifactId>core</artifactId>
-            <version>1.0.0</version>
+            <groupId>io.github.ordinarykai</groupId>
+            <artifactId>easy-boot-core</artifactId>
         </dependency>
     </dependencies>
 

@@ -20,8 +20,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.easy.boot.core.constant.CommonConstant.TOP_PARENT_ID;
-import static com.easy.boot.core.constant.RedisConstant.REDIS_PERMISSION_TREE;
+import static com.kai.constant.CommonConstant.TOP_PARENT_ID;
+import static com.kai.constant.RedisConstant.REDIS_PERMISSION_TREE;
 
 
 /**

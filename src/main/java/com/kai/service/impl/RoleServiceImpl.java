@@ -29,9 +29,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.easy.boot.core.constant.CommonConstant.DISABLE;
-import static com.easy.boot.core.constant.CommonConstant.ENABLE;
-import static com.easy.boot.core.constant.RedisConstant.REDIS_PERMISSION_ROLE;
+import static com.easy.boot.core.constant.Constants.DISABLE;
+import static com.easy.boot.core.constant.Constants.ENABLE;
+import static com.kai.constant.RedisConstant.REDIS_PERMISSION_ROLE;
 
 /**
  * @author kai

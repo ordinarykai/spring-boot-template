@@ -7,8 +7,8 @@ import com.easy.boot.core.api.exception.ApiException;
 import com.easy.boot.core.redis.service.RedisService;
 import com.easy.boot.core.util.StringUtil;
 import com.easy.boot.core.util.ali.AliYunSmsTemplate;
-import com.kai.dto.SendSmsDTO;
 import com.kai.dto.CaptchaVO;
+import com.kai.dto.SendSmsDTO;
 import com.kai.service.CodeServe;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +17,8 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
-import static com.easy.boot.core.constant.RedisConstant.REDIS_CODE_CAPTCHA;
-import static com.easy.boot.core.constant.RedisConstant.REDIS_CODE_SMS;
+import static com.kai.constant.RedisConstant.REDIS_CODE_CAPTCHA;
+import static com.kai.constant.RedisConstant.REDIS_CODE_SMS;
 
 /**
  * @author kai
@@ -38,6 +38,7 @@ public class CodeServeImpl implements CodeServe {
 
     @Resource
     private RedisService redisService;
+    @Resource
     private AliYunSmsTemplate aliYunSmsTemplate;
 
     @Override

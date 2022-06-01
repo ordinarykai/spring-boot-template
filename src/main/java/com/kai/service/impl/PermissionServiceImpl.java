@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.easy.boot.core.constant.RedisConstant.*;
+import static com.kai.constant.RedisConstant.*;
 
 /**
  * <p>
