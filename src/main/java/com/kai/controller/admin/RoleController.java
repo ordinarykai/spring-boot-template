@@ -1,6 +1,7 @@
 package com.kai.controller.admin;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.easy.boot.core.auth.PreAuthorize;
 import com.kai.dto.RoleAddDTO;
 import com.kai.dto.RolePageDTO;
 import com.kai.dto.RoleUpdateDTO;

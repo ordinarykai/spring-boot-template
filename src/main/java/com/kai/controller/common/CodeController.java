@@ -1,9 +1,9 @@
 package com.kai.controller.common;
 
 import com.easy.boot.core.api.Result;
+import com.kai.dto.CaptchaVO;
 import com.kai.dto.SendSmsDTO;
 import com.kai.service.CodeServe;
-import com.kai.dto.CaptchaVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;

@@ -37,3 +37,16 @@ ali-yun:
         sign-name: name
         template-code: code
         template-content: content
+
+generator:
+  # 代码生成器
+  code:
+    author: wukai
+    output-dir: D:/generator/code
+    parent: com.kai
+  # 数据库文档生成器
+  doc:
+    output-dir: D:/generator/doc
+  # 打印controller方法PreAuthorize注解权限
+  permission:
+    controller-package: com.kai.controller

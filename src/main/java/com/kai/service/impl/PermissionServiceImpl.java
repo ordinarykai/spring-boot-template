@@ -1,25 +1,20 @@
 package com.kai.service.impl;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.easy.boot.core.redis.service.RedisService;
 import com.easy.boot.core.util.bo.TreeVO;
 import com.kai.entity.Permission;
-import com.kai.entity.Role;
 import com.kai.mapper.PermissionMapper;
 import com.kai.service.PermissionService;
-import com.kai.service.RoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.kai.constant.RedisConstant.*;
+import static com.kai.constant.RedisConstant.REDIS_PERMISSION;
+import static com.kai.constant.RedisConstant.REDIS_PERMISSION_TREE;
 
 /**
  * <p>
@@ -33,31 +28,7 @@ import static com.kai.constant.RedisConstant.*;
 public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permission> implements PermissionService {
 
     @Resource
-    private RoleService roleService;
-    @Resource
     private RedisService redisService;
-
-    @Override
-    public List<TreeVO> getTree(Integer roleId) {
-        List<TreeVO> permissionTree;
-        if (redisService.hasKey(REDIS_PERMISSION_TREE)) {
-            permissionTree = redisService.get(REDIS_PERMISSION_TREE);
-        } else {
-            permissionTree = updatePermissionTreeCache();
-        }
-        if (roleId == null) {
-            return permissionTree;
-        }
-        Role role = roleService.getById(roleId);
-        List<String> permissionIds = Arrays.asList(role.getPermissionIds().split(","));
-        if (permissionIds.isEmpty()) {
-            return permissionTree;
-        }
-        for (TreeVO permission : permissionTree) {
-            permission.setCheckArr(permissionIds.contains(permission.getValue()) ? "1" : "0");
-        }
-        return permissionTree;
-    }
 
     @Override
     public List<TreeVO> updatePermissionTreeCache() {
@@ -87,34 +58,6 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             return redisService.get(REDIS_PERMISSION);
         }
         return updatePermissionCache();
-    }
-
-    @Override
-    public Set<String> getPermissionRole(List<Integer> roleIds) {
-        Set<String> permissions = new HashSet<>();
-        for (Integer roleId : roleIds) {
-            if (redisService.hasKey(REDIS_PERMISSION_ROLE + roleId)) {
-                permissions.addAll(redisService.get(REDIS_PERMISSION_ROLE + roleId));
-            } else {
-                permissions.addAll(updateRolePermissionCache(roleId));
-            }
-        }
-        return permissions;
-    }
-
-    @Override
-    public List<String> updateRolePermissionCache(Integer roleId) {
-        Role role = roleService.getById(roleId);
-        List<String> permissionIds = Arrays.asList(role.getPermissionIds().split(","));
-        List<Permission> permissionList = this.list(Wrappers.lambdaQuery(Permission.class)
-                .in(Permission::getPermissionId, permissionIds)
-                .select(Permission::getUri));
-        List<String> permissions = permissionList
-                .stream()
-                .map(Permission::getUri)
-                .collect(Collectors.toList());
-        redisService.set(REDIS_PERMISSION_ROLE + roleId, permissions);
-        return permissions;
     }
 
     private List<TreeVO> createPermissionTree(List<Permission> parentPermissionList, List<Permission> permissionList) {

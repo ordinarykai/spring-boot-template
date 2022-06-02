@@ -9,6 +9,7 @@ import com.easy.boot.core.util.bo.TreeVO;
 import com.kai.dto.PermissionVO;
 import com.kai.entity.Permission;
 import com.kai.service.PermissionService;
+import com.kai.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
@@ -35,6 +36,8 @@ public class PermissionController {
 
     @Resource
     private PermissionService permissionService;
+    @Resource
+    private RoleService roleService;
     @Resource
     private RedisService redisService;
 
@@ -77,7 +80,7 @@ public class PermissionController {
     public Result<List<TreeVO>> tree(
             @RequestParam(value = "roleId", required = false) Integer roleId
     ) {
-        List<TreeVO> list = permissionService.getTree(roleId);
+        List<TreeVO> list = roleService.getTree(roleId);
         return Result.success(list);
     }
 
